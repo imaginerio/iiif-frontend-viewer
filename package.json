@@ -1,0 +1,27 @@
+{
+  "name": "mockup-iiif",
+  "version": "1.0.0",
+  "description": "this is a iiif front-end implementation",
+  "author": "Davi Teodoro",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.6.2",
+    "openseadragon": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.11.0",
+    "prettier": "1.14.3",
+    "sass-loader": "^7.1.0"
+  }
+}

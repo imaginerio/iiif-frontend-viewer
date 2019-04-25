@@ -19,6 +19,7 @@
 
 <script>
 import viewer from '~/components/viewer.vue'
+import axios from 'axios';
 
 export default {
   components: {
@@ -38,8 +39,8 @@ export default {
     }
   },
   async asyncData({ $axios, route }) {
-    const { data } = await $axios.$get('/server/mock-data.json')
-    return { data }
+    const { data } = await axios.get('/server/mock-data.json')
+    return { ...data }
   }
 }
 </script>

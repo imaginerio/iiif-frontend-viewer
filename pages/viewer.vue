@@ -37,6 +37,7 @@
 
 <script>
 import viewer from '~/components/viewer.vue'
+import axios from 'axios'
 
 export default {
   components: {
@@ -55,10 +56,11 @@ export default {
       }
     }
   },
-  async asyncData({ $axios, route }) {
+  async asyncData({ route }) {
     const { id } = route.query
-    const { data } = await $axios.$get('/server/mock-data.json')
-    const item = data[id]
+    const { data } = await axios.get('/server/mock-data.json')
+    console.log(data.data)
+    const item = data.data[id]
     const { overlays, geolocation, manifest } = item
 
     let imagesInManifest = []

@@ -5,11 +5,7 @@
         <viewer :options="options" :imagesInManifest="imagesInManifest" :overlays="overlays"/>
         <br>
         <div class="img-details">
-          <div
-            v-for="metadata in manifest.metadata"
-            :key="metadata.label"
-            class="item-metadata"
-          >
+          <div v-for="metadata in manifest.metadata" :key="metadata.label" class="item-metadata">
             <h3>{{metadata.label}}</h3>
             <p v-html="metadata.value"></p>
           </div>
@@ -24,10 +20,25 @@
           <p class="img-description">{{manifest.description}}</p>
         </div>
         <div class="map">
-          <img class="responsive" src="@/assets/img/map.jpg" alt>
+          <mapbox
+            v-if="geolocation"
+            access-token="pk.eyJ1IjoiZGF2aXRlb2Rvcm8iLCJhIjoiY2pmYnJ1OHhyMGpuNzMxcGE5OTdvaXZlMCJ9._Cphfi7ZEtDPK8ohgLJGRQ"
+            :map-options="{
+                          style: 'https://maps.tilehosting.com/styles/basic/style.json?key=2rATmtGk6Jy8BQXXdDMD',
+                          style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
+                          center: [-43.17472726106644, -22.903620542862583],
+                          zoom: 16,
+                          }"
+            :geolocate-control="{
+                          show: false,
+                          position: 'top-right'
+                          }"
+            v-on:map-load="load"
+          />
         </div>
       </div>
     </section>
+
     <pre>
       {{item}}
       <!-- {{manifest}} -->
@@ -36,12 +47,15 @@
 </template>
 
 <script>
-import viewer from '~/components/viewer.vue'
+import Viewer from '~/components/Viewer.vue'
 import axios from 'axios'
+import Mapbox from '~/components/Mapbox.vue'
+// import fieldOfView from '~/assets/js/fov.js'
 
 export default {
   components: {
-    viewer
+    Viewer,
+    Mapbox
   },
   data() {
     return {
@@ -72,6 +86,20 @@ export default {
       })
     })
     return { manifest, imagesInManifest, overlays, geolocation }
+  },
+  methods: {
+    load(map) {
+      console.log('map loaded', map)
+      map.addLayer({
+        id: 'points',
+        type: 'circle',
+        source: this.geolocation,
+        paint: {
+          'circle-radius': 10,
+          'circle-color': '#007cbf'
+        }
+      })
+    }
   }
 }
 </script>
@@ -79,7 +107,7 @@ export default {
 .container {
   display: flex;
   justify-content: space-between;
-  margin: 50px 100px;
+  margin: 50px 50px;
 }
 
 .img-section {
@@ -109,7 +137,7 @@ export default {
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 550px;
   text-align: initial;
   padding: 0px 50px;
   .author {

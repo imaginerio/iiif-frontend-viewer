@@ -1,7 +1,12 @@
 <template>
   <div>
     <div :id="id" style="width: 100%; height: 600px;"></div>
-    <div v-for="overlay in overlays" :key="overlay.id" @click="navToWikidata(overlay.wikidataId)" :id="overlay.id">
+    <div
+      v-for="overlay in overlays"
+      :key="overlay.id"
+      @click="navToWikidata(overlay.wikidataId)"
+      :id="overlay.id"
+    >
       <div class="overlay-info">
         <!-- <h1>Ta pegando fogo bixo</h1> -->
       </div>
@@ -11,6 +16,7 @@
 
 <script>
 import OpenSeadragon from 'openseadragon'
+
 export default {
   props: {
     id: {
@@ -28,8 +34,7 @@ export default {
     }
   },
   data() {
-    return {
-    }
+    return {}
   },
   mounted() {
     const viewer = this.viewerInit()
@@ -44,7 +49,7 @@ export default {
       })
     },
     navToWikidata(id) {
-       window.open(`https://www.wikidata.org/wiki/${id}`);
+      window.open(`https://www.wikidata.org/wiki/${id}`)
     }
   }
 }

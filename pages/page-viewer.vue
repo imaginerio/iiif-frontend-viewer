@@ -25,7 +25,6 @@
             access-token="pk.eyJ1IjoiZGF2aXRlb2Rvcm8iLCJhIjoiY2pmYnJ1OHhyMGpuNzMxcGE5OTdvaXZlMCJ9._Cphfi7ZEtDPK8ohgLJGRQ"
             :map-options="{
                           style: 'https://maps.tilehosting.com/styles/basic/style.json?key=2rATmtGk6Jy8BQXXdDMD',
-                          style: 'https://tiles.stadiamaps.com/styles/alidade_smooth.json',
                           center: [-43.17472726106644, -22.903620542862583],
                           zoom: 16,
                           }"

@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import appViewer from '~/components/Viewer.vue'
+import appViewer from '~/components/viewer.vue'
 import axios from 'axios'
 import Mapbox from '~/components/Mapbox.vue'
 // import fieldOfView from '~/assets/js/fov.js'

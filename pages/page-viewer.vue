@@ -111,9 +111,7 @@ export default {
 }
 
 .img-section {
-  // background-color: #000000;
   img {
-    // width: 600px;
     width: 10px;
   }
 }

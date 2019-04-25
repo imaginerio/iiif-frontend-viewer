@@ -4,7 +4,7 @@
       <div class="grid">
         <nuxt-link
           v-for="item in data"
-          :to="'/viewer?id=' + item.id"
+          :to="'/page-viewer?id=' + item.id"
           :key="item.id"
           class="item"
         >

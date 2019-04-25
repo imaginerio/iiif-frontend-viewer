@@ -91,11 +91,11 @@ export default {
       console.log('map loaded', map)
       map.addLayer({
         id: 'points',
-        type: 'circle',
+        type: 'fill',
         source: this.geolocation,
         paint: {
-          'circle-radius': 10,
-          'circle-color': '#007cbf'
+          'fill-color': 'black',
+          'fill-opacity': 0.3
         }
       })
     }

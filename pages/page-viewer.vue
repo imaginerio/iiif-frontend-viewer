@@ -2,7 +2,7 @@
   <div>
     <section class="container">
       <div class="img-section responsive">
-        <viewer :options="options" :imagesInManifest="imagesInManifest" :overlays="overlays"/>
+        <app-viewer :options="options" :imagesInManifest="imagesInManifest" :overlays="overlays"/>
         <br>
         <div class="img-details">
           <div v-for="metadata in manifest.metadata" :key="metadata.label" class="item-metadata">
@@ -47,14 +47,14 @@
 </template>
 
 <script>
-import Viewer from '~/components/Viewer.vue'
+import appViewer from '~/components/Viewer.vue'
 import axios from 'axios'
 import Mapbox from '~/components/Mapbox.vue'
 // import fieldOfView from '~/assets/js/fov.js'
 
 export default {
   components: {
-    Viewer,
+    appViewer,
     Mapbox
   },
   data() {

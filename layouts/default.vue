@@ -1,10 +1,17 @@
 <template>
   <div>
+    <div class="header">
+      <nuxt-link tag="h1" to="/">IMS</nuxt-link>
+    </div>
     <nuxt/>
   </div>
 </template>
+<script>
+export default {}
+</script>
 
-<style>
+
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -51,5 +58,17 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+.header {
+  background-color: #202c3a;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  padding: 10px 50px;
+  display: flex;
+  h1 {
+    text-align: initial;
+    font-size: 22px;
+    cursor: pointer;
+  }
 }
 </style>

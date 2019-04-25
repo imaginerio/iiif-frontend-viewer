@@ -1,40 +1,19 @@
 <template>
   <div>
-    <div class="header">
-      <h1>IMS</h1>
-    </div>
     <section class="container">
-      <div class="img-section responsive">
-        <viewer :options="options" :imagesInManifest="imagesInManifest"/>
-        <div class="img-details">
-          <div v-for="metadata in iiifManifest.metadata" :key="metadata.label" class="item-metadata">
-            <h3>{{metadata.label}} </h3>
-            <p v-html="metadata.value"></p>
-          </div>
-        </div>
-      </div>
-      <div class="sidebar">
-        <div class="img-info">
-          <h3 class="author">
-            {{iiifManifest.metadata[0].value}}
-            <!-- <span>(1813-1892)</span> -->
-          </h3>
-          <br>
-          <h1 class="img-tag">{{iiifManifest.label}}</h1>
-          <br>
-          <p class="img-description">{{iiifManifest.description}}</p>
-        </div>
-        <div class="map">
-          <img class="responsive" src="@/assets/img/map.jpg" alt>
-        </div>
+      <div class="grid">
+        <nuxt-link
+          v-for="item in data"
+          :to="'/viewer?id=' + item.id"
+          :key="item.id"
+          class="item"
+        >
+          <img :src="item.manifest.thumbnail" alt class="responsive">
+          <div class="item__details">{{item.manifest.label}}</div>
+        </nuxt-link>
       </div>
     </section>
-    <pre>
-      {{imagesInManifest}}
-      {{images}}
-      {{options}}
-      {{iiifManifest}}
-    </pre>
+    <pre>{{data}}</pre>
   </div>
 </template>
 
@@ -59,48 +38,51 @@ export default {
     }
   },
   async asyncData({ $axios, route }) {
-    const { manifest } = route.query
-    const iiifManifest = await $axios.$get(manifest)
-    let imagesInManifest = []
-    iiifManifest.sequences.forEach(sequence => {
-      sequence.canvases.forEach(canvas => {
-        canvas.images.forEach(image => {
-          imagesInManifest.push(image.resource.service['@id'] + '/info.json')
-        })
-      })
-    })
-    return { iiifManifest, imagesInManifest }
+    const { data } = await $axios.$get('/server/mock-data.json')
+    return { data }
   }
 }
 </script>
 <style lang="scss" scoped>
-.container {
+.grid {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-flow: row dense;
+}
+.item {
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  color: #fff;
+  grid-column-start: auto;
+  grid-row-start: auto;
+  color: #fff;
+  cursor: pointer;
+  &__details {
+    position: relative;
+    z-index: 1;
+    padding: 5px 15px;
+    margin: 10px 0px 30px 0px;
+    color: #444;
+    background: #fff;
+    text-transform: lowercase;
+    letter-spacing: 1px;
+    color: #828282;
+  }
+}
+.container {
   margin: 50px 100px;
 }
 
-.img-section {
-  // background-color: #526488;
-  img {
-    // width: 600px;
-    width: 10px;
-  }
-}
 .responsive {
-  width: 100%;
-  height: auto;
-  min-width: 300px;
-}
-.header {
-  background-color: #202c3a;
-  color: rgb(255, 255, 255);
-  width: 100%;
-  padding: 10px 50px;
-  display: flex;
-  h1 {
-    text-align: initial;
-    font-size: 22px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
   }
 }
 
@@ -139,5 +121,10 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+.responsive {
+  width: 100%;
+  height: auto;
+  min-width: 300px;
 }
 </style>

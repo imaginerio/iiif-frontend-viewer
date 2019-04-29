@@ -10,6 +10,7 @@
         />
         <br>
         <div class="overlay-info">
+          <!-- <pre>{{overlayInfo}}</pre> -->
           <h4>{{overlayInfo.label}}</h4>
           <p>{{overlayInfo.description}}</p>
         </div>
@@ -30,8 +31,8 @@
           <br>
           <p class="img-description">{{manifest.description}}</p>
         </div>
-        <!-- <div class="map">
-          <mapbox
+        <div class="map">
+          <!-- <mapbox
             v-if="geolocation"
             access-token="pk.eyJ1IjoiZGF2aXRlb2Rvcm8iLCJhIjoiY2pmYnJ1OHhyMGpuNzMxcGE5OTdvaXZlMCJ9._Cphfi7ZEtDPK8ohgLJGRQ"
             :map-options="{
@@ -44,15 +45,10 @@
                           position: 'top-right'
                           }"
             v-on:map-load="load"
-          />
-        </div>-->
+          /> -->
+        </div>
       </div>
     </section>
-
-    <pre>
-      {{item}}
-      <!-- {{manifest}} -->
-    </pre>
   </div>
 </template>
 
@@ -60,7 +56,6 @@
 import appViewer from '~/components/viewer.vue'
 import axios from 'axios'
 import Mapbox from '~/components/Mapbox.vue'
-// import fieldOfView from '~/assets/js/fov.js'
 
 export default {
   components: {
@@ -112,16 +107,14 @@ export default {
       })
     },
     async showOverlay(id) {
-      console.log(id)
-      const q = await axios.get(
-        `https://query.wikidata.org/sparql?query=SELECT%20%3Flabel%20%3Fdescription%20%0AWHERE%20%0A%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20schema%3Adescription%20%3Fdescription.%20%0A%20%20FILTER%20(%20lang(%3Fdescription)%20%3D%20%22pt%22%20)%0A%20%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20rdfs%3Alabel%20%3Flabel.%0A%20%20FILTER%20(%20lang(%3Flabel)%20%3D%20%22pt%22%20)%0A%7D`
+      const query = await axios.get(
+        `https://query.wikidata.org/sparql?query=SELECT%20%3Fdescription%20%3Flabel%20%0AWHERE%20%0A%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20schema%3Adescription%20%3Fdescription.%20%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20rdfs%3Alabel%20%3Flabel.%0A%7D`
       )
       this.overlayInfo = {
-        description: q.data.results.bindings[0].description.value,
-        label: q.data.results.bindings[0].label.value
+        description: query.data.results.bindings[0].description.value,
+        label: query.data.results.bindings[0].label.value
       }
-      console.log('ola?')
-      console.log(id)
+      // this.overlayInfo =  query.data.results
     }
   }
 }

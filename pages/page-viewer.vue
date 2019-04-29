@@ -2,7 +2,18 @@
   <div>
     <section class="container">
       <div class="img-section responsive">
-        <app-viewer :options="options" :imagesInManifest="imagesInManifest" :overlays="overlays"/>
+        <app-viewer
+          :options="options"
+          :imagesInManifest="imagesInManifest"
+          :overlays="overlays"
+          v-on:overlay-active="showOverlay"
+        />
+        <br>
+        <div class="overlay-info">
+          <h4>{{overlayInfo.label}}</h4>
+          <p>{{overlayInfo.description}}</p>
+        </div>
+        <br>
         <br>
         <div class="img-details">
           <div v-for="metadata in manifest.metadata" :key="metadata.label" class="item-metadata">
@@ -19,7 +30,7 @@
           <br>
           <p class="img-description">{{manifest.description}}</p>
         </div>
-        <div class="map">
+        <!-- <div class="map">
           <mapbox
             v-if="geolocation"
             access-token="pk.eyJ1IjoiZGF2aXRlb2Rvcm8iLCJhIjoiY2pmYnJ1OHhyMGpuNzMxcGE5OTdvaXZlMCJ9._Cphfi7ZEtDPK8ohgLJGRQ"
@@ -34,7 +45,7 @@
                           }"
             v-on:map-load="load"
           />
-        </div>
+        </div>-->
       </div>
     </section>
 
@@ -59,6 +70,7 @@ export default {
   data() {
     return {
       viewer: false,
+      overlayInfo: '',
       options: {
         preserveViewport: true,
         visibilityRatio: 1.0,
@@ -98,6 +110,18 @@ export default {
           'fill-opacity': 0.3
         }
       })
+    },
+    async showOverlay(id) {
+      console.log(id)
+      const q = await axios.get(
+        `https://query.wikidata.org/sparql?query=SELECT%20%3Flabel%20%3Fdescription%20%0AWHERE%20%0A%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20schema%3Adescription%20%3Fdescription.%20%0A%20%20FILTER%20(%20lang(%3Fdescription)%20%3D%20%22pt%22%20)%0A%20%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20rdfs%3Alabel%20%3Flabel.%0A%20%20FILTER%20(%20lang(%3Flabel)%20%3D%20%22pt%22%20)%0A%7D`
+      )
+      this.overlayInfo = {
+        description: q.data.results.bindings[0].description.value,
+        label: q.data.results.bindings[0].label.value
+      }
+      console.log('ola?')
+      console.log(id)
     }
   }
 }
@@ -128,6 +152,13 @@ export default {
   h1 {
     text-align: initial;
     font-size: 22px;
+  }
+}
+
+.overlay-info {
+  display: flex;
+  h4 {
+    padding-right: 10px;
   }
 }
 

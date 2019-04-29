@@ -4,13 +4,9 @@
     <div
       v-for="overlay in overlays"
       :key="overlay.id"
-      @click="navToWikidata(overlay.wikidataId)"
+      @click="overlayActive(overlay.wikidataId)"
       :id="overlay.id"
-    >
-      <div class="overlay-info">
-        <!-- <h1>Ta pegando fogo bixo</h1> -->
-      </div>
-    </div>
+    ></div>
   </div>
 </template>
 
@@ -48,8 +44,8 @@ export default {
         tileSources: this.imagesInManifest
       })
     },
-    navToWikidata(id) {
-      window.open(`https://www.wikidata.org/wiki/${id}`)
+    overlayActive(id) {
+      this.$emit('overlay-active', id)
     }
   }
 }
@@ -64,9 +60,5 @@ export default {
   &:hover {
     outline: 2px solid rgb(255, 187, 0);
   }
-}
-.overlay-info {
-  position: absolute;
-  left: 100px;
 }
 </style>

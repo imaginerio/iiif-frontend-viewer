@@ -4,7 +4,6 @@
 
 <script>
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
-// import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 export default {
   data() {
     return {};

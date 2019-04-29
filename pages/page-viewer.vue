@@ -32,9 +32,9 @@
           <p class="img-description">{{manifest.description}}</p>
         </div>
         <div class="map">
-          <!-- <mapbox
+          <mapbox
             v-if="geolocation"
-            access-token="pk.eyJ1IjoiZGF2aXRlb2Rvcm8iLCJhIjoiY2pmYnJ1OHhyMGpuNzMxcGE5OTdvaXZlMCJ9._Cphfi7ZEtDPK8ohgLJGRQ"
+            access-token="MAPBOX_ACCESS_TOKEN"
             :map-options="{
                           style: 'https://maps.tilehosting.com/styles/basic/style.json?key=2rATmtGk6Jy8BQXXdDMD',
                           center: [-43.17472726106644, -22.903620542862583],
@@ -45,7 +45,7 @@
                           position: 'top-right'
                           }"
             v-on:map-load="load"
-          /> -->
+          />
         </div>
       </div>
     </section>

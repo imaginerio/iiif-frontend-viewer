@@ -1,6 +1,6 @@
-# mockup-iiif
+# iiif-mockup
 
-> this is a iiif front-end implementation
+>This is a iiif front-end implementation. You cand build it or see it live here: https://iiif-mockup.netlify.com/.
 
 ## Build Setup
 
@@ -19,4 +19,4 @@ $ yarn start
 $ yarn run generate
 ```
 
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+This is a nuxt aplication so, for detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).

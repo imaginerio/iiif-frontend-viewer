@@ -13,7 +13,6 @@
         </nuxt-link>
       </div>
     </section>
-    <!-- <pre>{{data}}</pre> -->
   </div>
 </template>
 

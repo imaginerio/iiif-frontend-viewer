@@ -55,7 +55,7 @@
           "height": 6618,
           "otherContent": [
             {
-              "@id": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/list/annotations.json",
+              "@id": "https://raw.githubusercontent.com/imaginerio/iiif-frontend-viewer/master/static/server/annotations.json",
               "@type": "sc:AnnotationList",
               "label": "Things depicted on this canvas"
             }

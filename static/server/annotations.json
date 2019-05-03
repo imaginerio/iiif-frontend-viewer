@@ -7,7 +7,7 @@
       "@id": "#Q56598848$980f403c-4bde-498c-56d6-22c55d8f96ef",
       "@type": "oa:Annotation",
       "motivation": "identifying",
-      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=54.6,45.9,10.9,7.3",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=1096,1377,218,219",
       "resource": {
         "@id": "http://www.wikidata.org/entity/Q56598848",
         "chars": "Igreja de Nossa Senhora da Candel\u00e1ria",

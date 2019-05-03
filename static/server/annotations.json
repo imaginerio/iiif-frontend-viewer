@@ -1,0 +1,62 @@
+{
+  "@id": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/list/annotations.json",
+  "@type": "sc:AnnotationList",
+  "label": "Annotations for Rua 1\u00ba de Marco Rio de Janeiro",
+  "resources": [
+    {
+      "@id": "#Q56598848$980f403c-4bde-498c-56d6-22c55d8f96ef",
+      "@type": "oa:Annotation",
+      "motivation": "identifying",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=54.6,45.9,10.9,7.3",
+      "resource": {
+        "@id": "http://www.wikidata.org/entity/Q56598848",
+        "chars": "Igreja de Nossa Senhora da Candel\u00e1ria",
+        "format": "text/plain"
+      }
+    },
+    {
+      "@id": "#Q56598848$8c89d00e-4e14-e173-dc5b-afead6915705",
+      "@type": "oa:Annotation",
+      "motivation": "identifying",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=483,573,489,1377",
+      "resource": {
+        "@id": "http://www.wikidata.org/entity/Q56598848",
+        "chars": "Igreja da Ordem Terceira do Carmo",
+        "format": "text/plain"
+      }
+    },
+    {
+      "@id": "#Q56598848$d95eed82-4744-f218-3db1-632778a7d64d",
+      "@type": "oa:Annotation",
+      "motivation": "identifying",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=329,963,449,1062",
+      "resource": {
+        "@id": "http://www.wikidata.org/entity/Q56598848",
+        "chars": "Igreja de Nossa Senhora do Monte do Carmo",
+        "format": "text/plain"
+      }
+    },
+    {
+      "@id": "#Q56598848$56199a36-4bee-a565-dd85-0844516b5154",
+      "@type": "oa:Annotation",
+      "motivation": "identifying",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=1311,1503,321,417",
+      "resource": {
+        "@id": "http://www.wikidata.org/entity/Q56598848",
+        "chars": "Hotel de France",
+        "format": "text/plain"
+      }
+    },
+    {
+      "@id": "#Q56598848$76458470-4256-1516-d55c-3a7840fad57b",
+      "@type": "oa:Annotation",
+      "motivation": "identifying",
+      "on": "https://tools.wmflabs.org/wd-image-positions/iiif/Q56598848/P18/canvas/c0.json#xywh=909,1842,710,351",
+      "resource": {
+        "@id": "http://www.wikidata.org/entity/Q56598848",
+        "chars": "Pra\u00e7a Quinze de Novembro",
+        "format": "text/plain"
+      }
+    }
+  ]
+}

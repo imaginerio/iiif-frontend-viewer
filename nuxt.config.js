@@ -14,7 +14,10 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     script: [
-      { src: 'https://unpkg.com/field-of-view' }
+      { src: 'https://unpkg.com/field-of-view' },
+      { src: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/openseadragon.min.js' },
+      { src: 'http://msalsbery.github.io/openseadragon-imaging/builds/openseadragon-imaginghelper.min.js' },
+      { src: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

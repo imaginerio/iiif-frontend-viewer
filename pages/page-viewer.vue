@@ -49,6 +49,7 @@
         </div>
       </div>
     </section>
+    <pre>{{imagesInManifest}}</pre>
   </div>
 </template>
 

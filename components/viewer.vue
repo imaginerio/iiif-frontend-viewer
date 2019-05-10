@@ -1,20 +1,19 @@
 <template>
   <div>
-    <div :id="id" style="width: 100%; height: 800px; background-color: #babaca"></div>
+    <div :id="id" style="width: 100%; height: 800px;"></div>
     <div
       v-for="overlay in overlays"
       :key="overlay.id"
-      @click="overlayActive(overlay.wikidataId)"
+      class="highlight"
+      @click="activeOverlay(overlay.wikidataId)"
       :id="overlay.id"
-    >{{overlay.id}}</div>
-    <button @click="convert"></button>
+    ></div>
+    <!-- <button @click="addOverlays(viewer)">add overlays</button> -->
   </div>
 </template>
 
 <script>
-// import OpenSeadragon from 'openseadragon'
-// import OpenSeadragonImaging from '@/assets/js/openseadragon-imaginghelper.min.js'
-
+import { resolve, reject } from 'q'
 export default {
   props: {
     id: {
@@ -32,62 +31,73 @@ export default {
     }
   },
   data() {
-    return {}
-  },
-  mounted() {
-    const viewer = this.viewerInit()
-    console.log(viewer)
-
-    // var imagingHelper = viewer.activateImagingHelper({
-    //   onImageViewChanged: onImageViewChanged
-    // })
-    function onImageViewChanged(event) {
-      // event.viewportWidth == width of viewer viewport in logical coordinates relative to image native size
-      // event.viewportHeight == height of viewer viewport in logical coordinates relative to image native size
-      // event.viewportOrigin == OpenSeadragon.Point, top-left of the viewer viewport in logical coordinates relative to image
-      // event.viewportCenter == OpenSeadragon.Point, center of the viewer viewport in logical coordinates relative to image
-      // event.zoomFactor == current zoom factor
+    return {
+      imagingHelper: {},
+      viewer: {}
     }
-    // console.log(imagingHelper.dataToLogicalY(300))
+  },
+  async mounted() {
+    const viewer = await this.viewerInit()
+    this.imagingHelper = viewer.activateImagingHelper({})
+    this.viewer = viewer
+
+    // Um workaround para garantir que os overlys sejam carregados só depois que o openseadragon estiver pronto.
+    setTimeout(() => {
+      this.addOverlays(viewer)
+    }, 1000)
+
   },
   methods: {
     viewerInit() {
-      return OpenSeadragon({
-        // overlays: this.overlays,
-        id: this.id,
-        ...this.options,
-        tileSources: this.imagesInManifest,
-        overlays: [
-          {
-            id: 'overlay',
-            x: 0.1,
-            y: 0.1,
-            width: 0.16,
-            height: 0.13,
-            className: 'highlight',
-            wikidataId: 'Q82312'
-          }
-        ]
+      return new Promise((resolve, reject) => {
+        resolve(
+          OpenSeadragon({
+            id: this.id,
+            ...this.options,
+            tileSources: this.imagesInManifest
+          })
+        )
       })
     },
-    overlayActive(id) {
+    activeOverlay(id) {
       this.$emit('overlay-active', id)
     },
-    convert() {
-      console.log(this.imagingHelper.dataToLogicalY(300))
+    addOverlays(viewer) {
+      this.overlays.map(overlay => {
+        const elt = document.getElementById(overlay.id)
+        this.viewer.addOverlay({
+          element: elt,
+          location: new OpenSeadragon.Rect(
+            this.convertPercentageToCoordinates(
+              overlay.coord[0],
+              overlay.coord[1]
+            ).x,
+            this.convertPercentageToCoordinates(
+              overlay.coord[0],
+              overlay.coord[1]
+            ).y,
+            this.convertPercentageToCoordinates(
+              overlay.coord[2],
+              overlay.coord[3]
+            ).x,
+            this.convertPercentageToCoordinates(
+              overlay.coord[2],
+              overlay.coord[3]
+            ).y
+          )
+        })
+      })
+    },
+    convertPercentageToCoordinates(x, y) {
+      const coordX = (this.imagingHelper.imgWidth * x) / 100
+      const coordY = (this.imagingHelper.imgHeight * y) / 100
+      const point = new OpenSeadragon.Point(coordX, coordY)
+
+      return this.viewer.viewport.imageToViewportCoordinates(point)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.highlight {
-  position: relative;
-  cursor: pointer;
-  background-color: rgba(160, 149, 48, 0);
-  outline: 2px solid rgba(255, 187, 0, 0.336);
-  &:hover {
-    outline: 2px solid rgb(255, 187, 0);
-  }
-}
 </style>

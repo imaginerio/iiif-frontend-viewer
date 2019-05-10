@@ -10,7 +10,6 @@
         />
         <br>
         <div class="overlay-info">
-          <!-- <pre>{{overlayInfo}}</pre> -->
           <h4>{{overlayInfo.label}}</h4>
           <p>{{overlayInfo.description}}</p>
         </div>
@@ -49,7 +48,6 @@
         </div>
       </div>
     </section>
-    <pre>{{imagesInManifest}}</pre>
   </div>
 </template>
 
@@ -80,9 +78,8 @@ export default {
   async asyncData({ route }) {
     const { id } = route.query
     const { data } = await axios.get('/server/mock-data.json')
-    console.log(data.data)
     const item = data.data[id]
-    const { overlays, geolocation, manifest } = item
+    const { geolocation, manifest, wikdataId } = item
 
     let imagesInManifest = []
     manifest.sequences.forEach(sequence => {
@@ -92,11 +89,38 @@ export default {
         })
       })
     })
+
+    // request depics from wikidata
+    const sparqlQuery = `select distinct ?depeint ?coord ?img ?article
+      WHERE {
+        wd:${wikdataId}  p:P180 ?DeclarationDepeint.
+        ?DeclarationDepeint ps:P180 ?depeint.
+        ?DeclarationDepeint pq:P2677 ?coord.
+        wd:${wikdataId} wdt:P18 ?img.
+
+        OPTIONAL {?article schema:about ?depeint .
+        FILTER (SUBSTR(str(?article), 1, 25) = "https://pt.wikipedia.org/") .}
+      }`
+
+    let overlays = await axios.get(
+      'https://query.wikidata.org/sparql?query=' + sparqlQuery
+    )
+
+    overlays = overlays.data.results.bindings.map(r => {
+      return {
+        coord: r.coord.value
+          .replace('pct:', '')
+          .split(',')
+          .map(n => parseFloat(n)),
+        id: r.depeint.value,
+        className: 'highlight',
+        wikidataId: r.depeint.value.replace('http://www.wikidata.org/entity/', '')
+      }
+    })
     return { manifest, imagesInManifest, overlays, geolocation }
   },
   methods: {
     load(map) {
-      console.log('map loaded', map)
       map.addLayer({
         id: 'points',
         type: 'fill',
@@ -115,7 +139,6 @@ export default {
         description: query.data.results.bindings[0].description.value,
         label: query.data.results.bindings[0].label.value
       }
-      // this.overlayInfo =  query.data.results
     }
   }
 }

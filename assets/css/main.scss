@@ -1,0 +1,9 @@
+.highlight {
+    position: relative;
+    cursor: pointer;
+    background-color: rgba(160, 149, 48, 0);
+    outline: 2px solid rgba(255, 187, 0, 0.336);
+    &:hover {
+      outline: 2px solid rgb(255, 187, 0);
+    }
+  }

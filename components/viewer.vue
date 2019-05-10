@@ -43,8 +43,9 @@ export default {
 
     // Um workaround para garantir que os overlys sejam carregados só depois que o openseadragon estiver pronto.
     setTimeout(() => {
+      console.log("carregar viewer")
       this.addOverlays(viewer)
-    }, 1000)
+    }, 2000)
 
   },
   methods: {

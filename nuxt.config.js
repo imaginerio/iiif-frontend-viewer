@@ -16,7 +16,7 @@ module.exports = {
     script: [
       { src: 'https://unpkg.com/field-of-view' },
       { src: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/openseadragon.min.js' },
-      { src: 'http://msalsbery.github.io/openseadragon-imaging/builds/openseadragon-imaginghelper.min.js' },
+      { src: 'https://msalsbery.github.io/openseadragon-imaging/builds/openseadragon-imaginghelper.min.js' },
       { src: 'https://cdn.jsdelivr.net/npm/openseadragon@2.4/build/openseadragon/images/' }
     ],
     link: [

@@ -45,7 +45,7 @@ export default {
     setTimeout(() => {
       console.log("carregar viewer")
       this.addOverlays(viewer)
-    }, 2000)
+    }, 1000)
 
   },
   methods: {

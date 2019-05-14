@@ -60,6 +60,12 @@ export default {
       return new Promise((resolve, reject) => {
         resolve(
           OpenSeadragon({
+            showHomeControl: false,
+            showFullPageControl: false,
+            showZoomControl: false,
+            showFullPageControl: false,
+            showNavigationControl: false,
+            showSequenceControl: false,
             id: this.id,
             ...this.options,
             tileSources: this.imagesInManifest

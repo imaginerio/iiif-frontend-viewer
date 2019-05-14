@@ -1,21 +1,25 @@
 <template>
   <div>
-    <div :id="id" style="width: 100%; height: 800px;"></div>
+    <div :id="id" class="viewer">
+      <div class="overlays-btn" @click="showOverlays = !showOverlays">
+        <img src="@/assets/img/layers.svg" alt>
+      </div>
+    </div>
     <div
       v-for="overlay in overlays"
+      v-show="showOverlays"
       :key="overlay.id"
       class="highlight"
       @click="activeOverlay(overlay.wikidataId)"
       :id="overlay.id"
     ></div>
-    <!-- <button @click="addOverlays(viewer)">add overlays</button> -->
   </div>
 </template>
 
 <script>
 import tippy from 'tippy.js';
 import axios from 'axios';
-import 'tippy.js/themes/light.css'
+import 'tippy.js/themes/light.css';
 
 export default {
   props: {
@@ -35,6 +39,7 @@ export default {
   },
   data() {
     return {
+      showOverlays: false,
       imagingHelper: {},
       viewer: {}
     };
@@ -128,5 +133,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.viewer {
+  position: relative;
+  width: 100%;
+  height: 800px;
+}
+.overlays-btn {
+  position: absolute;
+  z-index: 2;
+  left: 5px;
+  top: 20px;
+  background-color: rgb(255, 255, 255);
+  // padding: 6px 6px 4px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  img {
+    transition: opacity 0.3s;
+    padding: 6px 7px 4px 7px;
+    opacity: 0.5;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
 </style>

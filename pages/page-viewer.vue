@@ -2,7 +2,7 @@
   <div>
     <section class="container">
       <div class="img-section responsive">
-        <app-viewer
+        <the-viewer
           :options="options"
           :imagesInManifest="imagesInManifest"
           :overlays="overlays"
@@ -52,13 +52,13 @@
 </template>
 
 <script>
-import appViewer from '~/components/viewer.vue'
-import axios from 'axios'
-import Mapbox from '~/components/Mapbox.vue'
+import TheViewer from '~/components/TheViewer.vue';
+import axios from 'axios';
+import Mapbox from '~/components/Mapbox.vue';
 
 export default {
   components: {
-    appViewer,
+    TheViewer,
     Mapbox
   },
   data() {
@@ -73,22 +73,22 @@ export default {
         sequenceMode: true,
         showReferenceStrip: true
       }
-    }
+    };
   },
   async asyncData({ route }) {
-    const { id } = route.query
-    const { data } = await axios.get('/server/mock-data.json')
-    const item = data.data[id]
-    const { geolocation, manifest, wikdataId } = item
+    const { id } = route.query;
+    const { data } = await axios.get('/server/mock-data.json');
+    const item = data.data[id];
+    const { geolocation, manifest, wikdataId } = item;
 
-    let imagesInManifest = []
+    let imagesInManifest = [];
     manifest.sequences.forEach(sequence => {
       sequence.canvases.forEach(canvas => {
         canvas.images.forEach(image => {
-          imagesInManifest.push(image.resource.service['@id'] + '/info.json')
-        })
-      })
-    })
+          imagesInManifest.push(image.resource.service['@id'] + '/info.json');
+        });
+      });
+    });
 
     // request depics from wikidata
     const sparqlQuery = `select distinct ?depeint ?coord ?img ?article
@@ -100,11 +100,11 @@ export default {
 
         OPTIONAL {?article schema:about ?depeint .
         FILTER (SUBSTR(str(?article), 1, 25) = "https://pt.wikipedia.org/") .}
-      }`
+      }`;
 
     let overlays = await axios.get(
       'https://query.wikidata.org/sparql?query=' + sparqlQuery
-    )
+    );
 
     overlays = overlays.data.results.bindings.map(r => {
       return {
@@ -114,10 +114,13 @@ export default {
           .map(n => parseFloat(n)),
         id: r.depeint.value,
         className: 'highlight',
-        wikidataId: r.depeint.value.replace('http://www.wikidata.org/entity/', '')
-      }
-    })
-    return { manifest, imagesInManifest, overlays, geolocation }
+        wikidataId: r.depeint.value.replace(
+          'http://www.wikidata.org/entity/',
+          ''
+        )
+      };
+    });
+    return { manifest, imagesInManifest, overlays, geolocation };
   },
   methods: {
     load(map) {
@@ -129,19 +132,15 @@ export default {
           'fill-color': 'black',
           'fill-opacity': 0.3
         }
-      })
+      });
     },
     async showOverlay(id) {
-      const query = await axios.get(
-        `https://query.wikidata.org/sparql?query=SELECT%20%3Fdescription%20%3Flabel%20%0AWHERE%20%0A%7B%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20schema%3Adescription%20%3Fdescription.%20%0A%20%20%3Chttp%3A%2F%2Fwww.wikidata.org%2Fentity%2F${id}%3E%20rdfs%3Alabel%20%3Flabel.%0A%7D`
-      )
-      this.overlayInfo = {
-        description: query.data.results.bindings[0].description.value,
-        label: query.data.results.bindings[0].label.value
-      }
+      //TODO: Deve ir para pagina da galeria, 
+      // ou para pagina do item no wikdata, 
+      // ou buscar por itens semelhantes no wikidata etc.
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .container {

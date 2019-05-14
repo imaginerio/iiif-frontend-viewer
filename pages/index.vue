@@ -17,25 +17,12 @@
 </template>
 
 <script>
-import viewer from '~/components/viewer.vue'
 import axios from 'axios';
 
 export default {
-  components: {
-    viewer
-  },
+
   data() {
-    return {
-      viewer: false,
-      options: {
-        preserveViewport: true,
-        visibilityRatio: 1.0,
-        minZoomLevel: 1,
-        defaultZoomLevel: 1,
-        sequenceMode: true,
-        showReferenceStrip: true
-      }
-    }
+    return {}
   },
   async asyncData({ $axios, route }) {
     const { data } = await axios.get('/server/mock-data.json')
